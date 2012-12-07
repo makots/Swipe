@@ -96,6 +96,10 @@ Swipe.prototype = {
   slide: function(index, duration) {
 
     var style = this.element.style;
+    
+    // normalize index
+    if (index < 0) index = this.slides.length - 1;
+    else if (index >= this.slides.length) index = 0;
 
     // fallback to default speed
     if (duration == undefined) {
@@ -128,7 +132,7 @@ Swipe.prototype = {
     clearTimeout(this.interval);
 
     // if not at first slide
-    if (this.index) this.slide(this.index-1, this.speed);
+    this.slide(this.index-1, this.speed);
 
   },
 
@@ -138,8 +142,7 @@ Swipe.prototype = {
     this.delay = delay || 0;
     clearTimeout(this.interval);
 
-    if (this.index < this.length - 1) this.slide(this.index+1, this.speed); // if not last slide
-    else this.slide(0, this.speed); //if last slide return to start
+    this.slide(this.index+1, this.speed);
 
   },
 
